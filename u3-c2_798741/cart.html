@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+#navbar{
+        border: 2px solid black;
+        width: 95%;
+        height: 100px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        align-content: center;
+      }
+      #cartpage{
+        width: 95%;
+        height: auto;
+        border: 2px solid black;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: repeat(auto,auto);
+      }
+      #cartpage>div{
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        /* gap: 1px; */
+        text-align: center;
+      }
+      #cartpage>div>img{
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href=""> <div>login</div></a>
+      <a href="#"><div>Sign-Up</div></a>
+       <a href="index.html"><Div>Home</Div></a>
+      <a href="wallet.html"><div>wallet</div></a> 
+
+     <!-- Give cart link for navigation with id:- cart   -->
+     <!-- For wallet amount Show only number i.e only "500", no extra text like "amount = 500" with id :- "wallet" -->
+   </div>
+    <div>
+      <!--Show cart total with id:- "cart_total" here, do not add anything only Total value. Not even "Total - 1200Rs" but like this "1200" -->
+    </div>
+    <div id="cartpage">
+      <!--Show items added to cart here-->
+      <!-- add an remove button to each item so that you can remove that dish from cart, give the button HTML class as 'remove' -->
+    </div>
+
+    <!-- Provide a checkout button with id as "checkout" to go to checkout.html page -->
+  </body>
+</html>
+<script>
+  cartarray = JSON.parse(localStorage.getItem("cartdata"))||[];
+  var removeddata = JSON.parse(localStorage.getItem("removedcart"))||[];
+  var container = document.querySelector("#cartpage");
+  appended(cartarray)
+  function appended(data){
+    container.innerHTML = "";
+      data.forEach(function(ele,index){
+     var dv = document.createElement("div");
+   var image = document.createElement("img");
+   image.src = ele.image;
+   var name = document.createElement("h2");
+   name.innerText = ele.name;
+   var price = document.createElement("p");
+   price.innerText = ele.price;
+   var  add_to_cart = document.createElement("button")
+    add_to_cart.innerText = "Remove";
+    add_to_cart.addEventListener("click",function(){
+       remove(data,ele,index);
+    });
+    dv.append(image,name,price,add_to_cart);
+      container.append(dv);
+      });
+   };
+
+   function remove( data,ele,index){
+      removeddata.push(ele);
+       localStorage.setItem("removedcart",JSON.stringify(removeddata));
+       alert("product removed form the cart")
+       data.splice(index,1);
+       localStorage.setItem("cartdata",JSON.stringify(data));
+       appended(data);
+   }
+   
+  
+
+
+</script>
